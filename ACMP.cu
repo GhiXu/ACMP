@@ -1,8 +1,5 @@
 #include "ACMP.h"
 
-#define P_X 896
-#define P_Y 864
-
 __device__  void sort_small(float *d, const int n)
 {
     int j;
