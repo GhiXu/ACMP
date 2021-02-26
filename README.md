@@ -21,7 +21,7 @@ This repository contains the code for the paper [Planar Prior Assisted PatchMatc
 * Cmake
 ## Usage
 * Complie ACMP
-    $ cmake .
+>cmake .
     $ make
 * Test
     First convert COLMAP SfM result to ACMP input by the script colmap2mvsnet_acm.py, then run ./ACMP $data_folder to get reconstruction results.
