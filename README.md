@@ -24,8 +24,8 @@ This repository contains the code for the paper [Planar Prior Assisted PatchMatc
 cmake .  
 make
 * Test  
-convert COLMAP SfM result to ACMP input by the script ```colmap2mvsnet_acm.py```  
-run ./ACMP $data_folder to get reconstruction results
+Use script ```colmap2mvsnet_acm.py``` to convert COLMAP SfM result to ACMP input   
+Run ./ACMP $data_folder to get reconstruction results
 ## Acknowledgemets
 This code largely benefits from the following repositories: [Gipuma](https://github.com/kysucix/gipuma) and [COLMAP](https://colmap.github.io/). Thanks to their authors for opening source of their excellent works.
 
