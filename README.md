@@ -20,12 +20,16 @@ This repository contains the code for the paper [Planar Prior Assisted PatchMatc
 * [OpenCV](https://opencv.org/) >= 2.4
 * [cmake](https://cmake.org/)
 ## Usage
-* Complie ACMP  
+* Complie ACMP
+```  
 cmake .  
 make
-* Test  
+```
+* Test 
+``` 
 Use script ```colmap2mvsnet_acm.py``` to convert COLMAP SfM result to ACMP input   
 Run ./ACMP $data_folder to get reconstruction results
+```
 ## Acknowledgemets
 This code largely benefits from the following repositories: [Gipuma](https://github.com/kysucix/gipuma) and [COLMAP](https://colmap.github.io/). Thanks to their authors for opening source of their excellent works.
 
