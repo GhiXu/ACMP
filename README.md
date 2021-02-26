@@ -16,9 +16,9 @@ This repository contains the code for the paper [Planar Prior Assisted PatchMatc
 }
 ```
 ## Dependencies
-* Cuda >= 6.0
-* OpenCV >= 2.4
-* Cmake
+* [Cuda](https://developer.nvidia.com/zh-cn/cuda-downloads) >= 6.0
+* [OpenCV](https://opencv.org/) >= 2.4
+* [cmake](https://cmake.org/)
 ## Usage
 * Complie ACMP  
 cmake .  
