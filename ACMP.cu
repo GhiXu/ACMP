@@ -559,7 +559,7 @@ __global__ void RandomInitialization(cudaTextureObjects *texture_objects, Camera
 __device__ void PlaneHypothesisRefinement(const cudaTextureObject_t *images, const cudaTextureObject_t *depth_images, const Camera *cameras, float4 *plane_hypothesis, float *depth, float *cost, curandState *rand_state, const float *view_weights, const float weight_norm, float4 *prior_planes, unsigned int *plane_masks, float *restricted_cost, const int2 p, const PatchMatchParams params)
 {
     float perturbation = 0.02f;
-    const int center = p.y * cameras[0].width; + p.x;
+    const int center = p.y * cameras[0].width + p.x;
 
     float gamma = 0.5f;
     float depth_sigma = (params.depth_max - params.depth_min) / 64.0f;
