@@ -35,7 +35,7 @@ void GenerateSampleList(const std::string &dense_folder, std::vector<Problem> &p
 void ProcessProblem(const std::string &dense_folder, const Problem &problem, bool geom_consistency, bool planar_prior)
 {
     std::cout << "Processing image " << std::setw(8) << std::setfill('0') << problem.ref_image_id << "..." << std::endl;
-    cudaSetDevice(1);
+    cudaSetDevice(0);
     std::stringstream result_path;
     result_path << dense_folder << "/ACMP" << "/2333_" << std::setw(8) << std::setfill('0') << problem.ref_image_id;
     std::string result_folder = result_path.str();
