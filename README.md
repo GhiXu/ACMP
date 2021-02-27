@@ -16,6 +16,7 @@ This repository contains the code for the paper [Planar Prior Assisted PatchMatc
 }
 ```
 ## Dependencies
+The code has been tested on Ubuntu 14.04 with GTX Titan X.  
 * [Cuda](https://developer.nvidia.com/zh-cn/cuda-downloads) >= 6.0
 * [OpenCV](https://opencv.org/) >= 2.4
 * [cmake](https://cmake.org/)
