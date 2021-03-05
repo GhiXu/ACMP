@@ -1,4 +1,5 @@
 # ACMP
+[News] The code for [ACMH](https://github.com/GhiXu/ACMH) is released!!!  
 [News] The code for [ACMM](https://github.com/GhiXu/ACMM) is released!!!
 ## About
 This repository contains the code for the paper [Planar Prior Assisted PatchMatch Multi-View Stereo](https://arxiv.org/abs/1912.11744), Qingshan Xu and Wenbing Tao, AAAI2020. If you find this project useful for your research, please cite:  
