@@ -805,7 +805,7 @@ __device__ void CheckerboardPropagation(const cudaTextureObject_t *images, const
                 }
             }
             if (p.x > 1 + i && p.y < height - 1 - i) {
-                int pointTemp = left_near - (1 + i) - i * width;
+                int pointTemp = left_near - (1 + i) + i * width;
                 if (costs[pointTemp] < costMin) {
                     costMin = costs[pointTemp];
                     costMinPoint = pointTemp;
