@@ -264,15 +264,9 @@ int readDepthDmb(const std::string file_path, cv::Mat_<float> &depth)
         fclose(inimage);
         return -1;
     }
-
+    depth.create(h,w);
     int32_t dataSize = h*w*nb;
-
-    float* data;
-    data = (float*) malloc (sizeof(float)*dataSize);
-    fread(data,sizeof(float),dataSize,inimage);
-
-    depth = cv::Mat(h,w,CV_32F,data);
-
+    fread(depth.data,sizeof(float),dataSize,inimage);
     fclose(inimage);
     return 0;
 }
@@ -308,7 +302,7 @@ int readNormalDmb (const std::string file_path, cv::Mat_<cv::Vec3f> &normal)
 {
     FILE *inimage;
     inimage = fopen(file_path.c_str(), "rb");
-    if (!inimage){
+    if (!inimage) {
         std::cout << "Error opening file " << file_path << std::endl;
         return -1;
     }
@@ -322,19 +316,14 @@ int readNormalDmb (const std::string file_path, cv::Mat_<cv::Vec3f> &normal)
     fread(&w,sizeof(int32_t),1,inimage);
     fread(&nb,sizeof(int32_t),1,inimage);
 
-    if(type != 1){
+    if (type != 1) {
         fclose(inimage);
         return -1;
     }
 
+    normal.create(h,w);
     int32_t dataSize = h*w*nb;
-
-    float* data;
-    data = (float*) malloc (sizeof(float)*dataSize);
-    fread(data,sizeof(float),dataSize,inimage);
-
-    normal = cv::Mat(h,w,CV_32FC3,data);
-
+    fread(normal.data,sizeof(float),dataSize,inimage);
     fclose(inimage);
     return 0;
 }
@@ -376,7 +365,7 @@ void StoreColorPlyFileBinaryPointCloud (const std::string &plyFilePath, const st
     /*write header*/
     fprintf(outputPly, "ply\n");
     fprintf(outputPly, "format binary_little_endian 1.0\n");
-    fprintf(outputPly, "element vertex %d\n",pc.size());
+    fprintf(outputPly, "element vertex %lu\n",pc.size());
     fprintf(outputPly, "property float x\n");
     fprintf(outputPly, "property float y\n");
     fprintf(outputPly, "property float z\n");
@@ -426,7 +415,7 @@ static float GetDisparity(const Camera &camera, const int2 &p, const float &dept
     float point3D[3];
     point3D[0] = depth * (p.x - camera.K[2]) / camera.K[0];
     point3D[1] = depth * (p.y - camera.K[5]) / camera.K[4];
-    point3D[3] = depth;
+    point3D[2] = depth;
 
     return std::sqrt(point3D[0] * point3D[0] + point3D[1] * point3D[1] + point3D[2] * point3D[2]);
 }
