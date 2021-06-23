@@ -32,18 +32,18 @@ void GenerateSampleList(const std::string &dense_folder, std::vector<Problem> &p
     }
 }
 
-void ProcessProblem(const std::string &dense_folder, const Problem &problem, bool geom_consistency, bool planar_prior)
+void ProcessProblem(const std::string &dense_folder, const Problem &problem, bool geom_consistency, bool planar_prior, bool multi_geometrty=false)
 {
     std::cout << "Processing image " << std::setw(8) << std::setfill('0') << problem.ref_image_id << "..." << std::endl;
     cudaSetDevice(0);
     std::stringstream result_path;
     result_path << dense_folder << "/ACMP" << "/2333_" << std::setw(8) << std::setfill('0') << problem.ref_image_id;
     std::string result_folder = result_path.str();
-    mkdir(result_folder.c_str(), 777);
+    mkdir(result_folder.c_str(), 0777);
 
     ACMP acmp;
     if (geom_consistency) {
-        acmp.SetGeomConsistencyParams();
+        acmp.SetGeomConsistencyParams(multi_geometrty);
     }
     acmp.InuputInitialization(dense_folder, problem);
 
@@ -323,20 +323,30 @@ int main(int argc, char** argv)
     GenerateSampleList(dense_folder, problems);
 
     std::string output_folder = dense_folder + std::string("/ACMP");
-    mkdir(output_folder.c_str(), 777);
+    mkdir(output_folder.c_str(), 0777);
 
     size_t num_images = problems.size();
     std::cout << "There are " << num_images << " problems needed to be processed!" << std::endl;
 
     bool geom_consistency = false;
     bool planar_prior = true;
+    bool multi_geometry = false;
+    int geom_iterations = 2;
     for (size_t i = 0; i < num_images; ++i) {
         ProcessProblem(dense_folder, problems[i], geom_consistency, planar_prior);
     }
     geom_consistency = true;
     planar_prior = false;
-    for (size_t i = 0; i < num_images; ++i) {
-        ProcessProblem(dense_folder, problems[i], geom_consistency, planar_prior);
+    for (int geom_iter = 0; geom_iter < geom_iterations; ++geom_iter) {
+        if (geom_iter == 0) {
+            multi_geometry = false;
+        }
+        else {
+            multi_geometry = true;
+        }
+        for (size_t i = 0; i < num_images; ++i) {
+            ProcessProblem(dense_folder, problems[i], geom_consistency, planar_prior, multi_geometry);
+        }
     }
 
     RunFusion(dense_folder, problems, geom_consistency);
