@@ -860,14 +860,27 @@ __device__ void CheckerboardPropagation(const cudaTextureObject_t *images, const
     }
 
     float sampling_probs[32] = {0.0f};
-    for (int i = 0; i < params.num_images - 1; ++i) {
-        float temp_w = 0.0f;
-        for (int j = 0; j < 8; ++j) {
-            if (flag[j]) {
-                temp_w += exp(cost_array[j][i] * cost_array[j][i] / -0.18f);
+    float cost_threshold = 0.8 * expf((iter) * (iter) / (-90.0f));
+    for (int i = 0; i < params.num_images - 1; i++) {
+        float count = 0;
+        int count_false = 0;
+        float tmpw = 0;
+        for (int j = 0; j < 8; j++) {
+            if (cost_array[j][i] < cost_threshold) {
+                tmpw += expf(cost_array[j][i] * cost_array[j][i] / (-0.18f));
+                count++;
+            }
+            if (cost_array[j][i] > 1.2f) {
+                count_false++;
             }
         }
-        sampling_probs[i] = temp_w / num_valid_pixels * view_selection_priors[i];
+        if (count > 2 && count_false < 3) {
+            sampling_probs[i] = tmpw / count;
+        }
+        else if (count_false < 3) {
+            sampling_probs[i] = expf(cost_threshold * cost_threshold / (-0.32f));
+        }
+        sampling_probs[i] = sampling_probs[i] * view_selection_priors[i];
     }
 
     TransformPDFToCDF(sampling_probs, params.num_images - 1);
