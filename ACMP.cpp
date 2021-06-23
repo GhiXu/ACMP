@@ -431,10 +431,13 @@ static float GetDisparity(const Camera &camera, const int2 &p, const float &dept
     return std::sqrt(point3D[0] * point3D[0] + point3D[1] * point3D[1] + point3D[2] * point3D[2]);
 }
 
-void ACMP::SetGeomConsistencyParams()
+void ACMP::SetGeomConsistencyParams(bool multi_geometry=false)
 {
     params.geom_consistency = true;
     params.max_iterations = 2;
+    if (multi_geometry) {
+        params.multi_geometry = true;
+    }
 }
 
 void ACMP::SetPlanarPriorParams()
@@ -521,7 +524,11 @@ void ACMP::InuputInitialization(const std::string &dense_folder, const Problem &
         std::stringstream result_path;
         result_path << dense_folder << "/ACMP" << "/2333_" << std::setw(8) << std::setfill('0') << problem.ref_image_id;
         std::string result_folder = result_path.str();
-        std::string depth_path = result_folder + "/depths.dmb";
+        std::string suffix = "/depths.dmb";
+        if (params.multi_geometry) {
+            suffix = "/depths_geom.dmb";
+        }
+        std::string depth_path = result_folder + suffix;
         cv::Mat_<float> ref_depth;
         readDepthDmb(depth_path, ref_depth);
         depths.push_back(ref_depth);
@@ -531,7 +538,7 @@ void ACMP::InuputInitialization(const std::string &dense_folder, const Problem &
             std::stringstream result_path;
             result_path << dense_folder << "/ACMP" << "/2333_" << std::setw(8) << std::setfill('0') << problem.src_image_ids[i];
             std::string result_folder = result_path.str();
-            std::string depth_path = result_folder + "/depths.dmb";
+            std::string depth_path = result_folder + suffix;
             cv::Mat_<float> depth;
             readDepthDmb(depth_path, depth);
             depths.push_back(depth);
@@ -613,7 +620,11 @@ void ACMP::CudaSpaceInitialization(const std::string &dense_folder, const Proble
         std::stringstream result_path;
         result_path << dense_folder << "/ACMP" << "/2333_" << std::setw(8) << std::setfill('0') << problem.ref_image_id;
         std::string result_folder = result_path.str();
-        std::string depth_path = result_folder + "/depths.dmb";
+        std::string suffix = "/depths.dmb";
+        if (params.multi_geometry) {
+            suffix = "/depths_geom.dmb";
+        }
+        std::string depth_path = result_folder + suffix;
         std::string normal_path = result_folder + "/normals.dmb";
         std::string cost_path = result_folder + "/costs.dmb";
         cv::Mat_<float> ref_depth;
