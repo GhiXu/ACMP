@@ -33,6 +33,11 @@ make
 Use script colmap2mvsnet_acm.py to convert COLMAP SfM result to ACMP input   
 Run ./ACMP $data_folder to get reconstruction results
 ```
+## Results on high-res ETH3D training dataset [2cm]
+| Mean   | courtyard | delivery_area | electro | facade | kicker | meadow | office | pipes  | playgroud | relief | relief_2 | terrace | terrains |
+|--------|-----------|---------------|---------|--------|--------|--------|--------|--------|-----------|--------|----------|---------|----------|
+| 79.81  | 86.57     | 85.04         | 86.83   | 69.88  | 77.01  | 64.88  | 75.81	 | 71.13  | 71.14     | 84.46  | 84.16    | 90.14	  | 90.50    |
+```
 ## Acknowledgemets
 This code largely benefits from the following repositories: [Gipuma](https://github.com/kysucix/gipuma) and [COLMAP](https://colmap.github.io/). Thanks to their authors for opening source of their excellent works.
 
