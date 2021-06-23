@@ -41,6 +41,7 @@ struct PatchMatchParams {
     float disparity_min = 0.0f;
     float disparity_max = 1.0f;
     bool geom_consistency = false;
+    bool multi_geometry = false;
     bool planar_prior = false;
 };
 
@@ -53,7 +54,7 @@ public:
     void Colmap2MVS(const std::string &dense_folder, std::vector<Problem> &problems);
     void CudaSpaceInitialization(const std::string &dense_folder, const Problem &problem);
     void RunPatchMatch();
-    void SetGeomConsistencyParams();
+    void SetGeomConsistencyParams(bool multi_geometry);
     void SetPlanarPriorParams();
     int GetReferenceImageWidth();
     int GetReferenceImageHeight();
