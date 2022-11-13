@@ -1,6 +1,5 @@
 #include "main.h"
 #include "ACMP.h"
-#include<map>
 
 void GenerateSampleList(const std::string &dense_folder, std::vector<Problem> &problems)
 {
